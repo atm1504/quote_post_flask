@@ -1,10 +1,22 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request
 from quote_post import app,db,bcrypt
 from quote_post.forms import RegistrationForm, LoginForm
 from quote_post.models import User, Post
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 # Dummy data
 posts = [ 
+    {
+        'author': 'Atreyee Mukherjee',
+        'title': "B'Day Wish",
+        'content': "Happy B'day Amartya Darling! ",
+        'date_posted': '4th Jan, 2000'
+    },
+    {
+        'author': 'Amartya Mondal',
+        'title': "B'Day Wish",
+        'content': "Happy B'day Atreyee Darling! ",
+        'date_posted': '15th August, 2000'
+    },
     {
         'author': 'Atreyee Mukherjee',
         'title': "B'Day Wish",
@@ -52,7 +64,8 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for("home"))
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for("home"))
         else:
             flash(f'Failed to login. CHeck email and password', "danger")
     return render_template("login.html", title="Login", form=form)
@@ -61,3 +74,8 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("home"))
+
+@app.route("/account")
+@login_required
+def account():
+    return render_template("account.html", title="Account")
