@@ -1,6 +1,13 @@
 # QUOTE POST
 A flask app to post quotes!
 
+## How to run
+First of all, activate he virtual environment.
+```source quote_post_env/bin/activate```
+
+Now, run the app.py file
+``` python3 app.py```
+
 ## Screenshots
 
 <img width="1680" alt="Screenshot 2020-06-06 at 12 52 50 AM" src="https://user-images.githubusercontent.com/43731599/83915067-279dbe80-a790-11ea-8f67-49d92314daca.png">
