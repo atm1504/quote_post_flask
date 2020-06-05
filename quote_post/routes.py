@@ -1,5 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
-from quote_post import app,db,bcrypt
+from quote_post import app, db, bcrypt
+from PIL import Image
 from quote_post.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from quote_post.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
@@ -82,7 +83,11 @@ def save_picture(form_picture):
     f_name, f_ext = os.path.splitext(form_picture.filename)
     picture_name = random_hex + f_ext
     picture_path = os.path.join(app.root_path, "static/profile_pics", picture_name)
-    form_picture.save(picture_path)
+   
+    output_size = (250, 250)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
     return picture_name
 
 @app.route("/account", methods=["GET", "POST"])
