@@ -3,7 +3,7 @@ A flask app to post quotes!
 
 ## PreRequisites
 ``` pip  install -r requirements.txt```
-Now, set the secret key, email id, password in the ``` __init__.py``` file
+Now, update the values of the Parameters in ```config.py``` file with your own key values.
 
 ## How to run
 First of all, activate he virtual environment.
