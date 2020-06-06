@@ -1,6 +1,6 @@
-from flask import render_template, request, Blueprint
+from flask import render_template, request, Blueprint, redirect, url_for
 from quote_post.models import Post
-
+from flask_login import current_user
 main = Blueprint('main', __name__)
 
 @main.route('/')
@@ -14,4 +14,4 @@ def home():
 
 @main.route('/about')
 def about():
-    return render_template("about.html", posts=posts)
+    return render_template("about.html")
