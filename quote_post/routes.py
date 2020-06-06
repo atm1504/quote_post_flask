@@ -1,5 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, abort
-from quote_post import app, db, bcrypt
+from quote_post import app, db, bcrypt, mail
+from flask_mail import Message
 from PIL import Image
 from quote_post.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm
 from quote_post.models import User, Post
@@ -142,10 +143,15 @@ def user_posts(username):
     return render_template("user_post.html", posts=posts, title=user.username, user=user)
 
 def send_reset_email(user):
-    pass
+    token = user.get_reset_token()
+    msg = Message("Password Reset Request", sender="noreply@atm1504.in", recipients=[user.email])
+    msg.body = f'''To reset your password, visit the following link:
+{url_for('reset_token', token=token, _external=True)}
+If you did not make this request then simply ignore this email and no changes will be made.
+'''
+    mail.send(msg)
 
 @app.route("/reset_password",methods=["GET", "POST"])
-@login_required
 def reset_request():
     if current_user.is_authenticated:
         return redirect(url_for("home"))
@@ -158,7 +164,6 @@ def reset_request():
     return render_template("reset_request.html", title="Reset Password", form=form)
 
 @app.route("/reset_password/<token>",methods=["GET", "POST"])
-@login_required
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
