@@ -21,7 +21,9 @@ mail = Mail(app)
 from quote_post.users.routes import users
 from quote_post.posts.routes import posts
 from quote_post.main.routes import main
+from quote_post.errors.handlers import errors
 
 app.register_blueprint(users)
 app.register_blueprint(posts)
 app.register_blueprint(main)
+app.register_blueprint(errors)
