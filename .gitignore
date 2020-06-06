@@ -115,3 +115,5 @@ dmypy.json
 .DS_Store
 quote_post/.DS_Store
 # End of https://www.gitignore.io/api/flask
+
+config.txt

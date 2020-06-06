@@ -1,6 +1,10 @@
 # QUOTE POST
 A flask app to post quotes!
 
+## PreRequisites
+``` pip  install -r requirements.txt```
+Now, set the secret key, email id, password in the ``` __init__.py``` file
+
 ## How to run
 First of all, activate he virtual environment.
 ```source quote_post_env/bin/activate```
